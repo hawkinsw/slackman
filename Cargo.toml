@@ -1,0 +1,11 @@
+[package]
+
+name="slack_man"
+version="0.0.1"
+authors = ["Will Hawkins"]
+
+[dependencies]
+hyper-native-tls = "*"
+iron = "0.5.*"
+params = { path = "params" }
+rustc-serialize = "0.3.24"
