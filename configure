@@ -1,0 +1,10 @@
+#!/bin/bash 
+
+if [ ! -d params ]; then
+	git clone https://github.com/iron/params.git
+else
+	cwd=`pwd`
+	cd params
+	git pull  
+	cd $cwd
+fi
