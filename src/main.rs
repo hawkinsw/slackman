@@ -1,16 +1,19 @@
 extern crate iron;
 extern crate hyper_native_tls;
-extern crate rustc_serialize;
+#[macro_use]
+extern crate serde_derive;
+
+extern crate serde;
+extern crate serde_json;
 extern crate params;
 
 use iron::prelude::*;
 use iron::status;
 use hyper_native_tls::NativeTlsServer;
 use std::process::Command;
-use rustc_serialize::json;
 use params::Params;
 
-#[derive(RustcDecodable, RustcEncodable)]
+#[derive(Serialize, Debug)]
 struct SlackResponse {
 	response_type : String,
 	text : String
@@ -30,7 +33,7 @@ fn respond(req: &mut Request) -> IronResult<Response> {
 
 		if let Some(0) = man.status.code() {
 			println!("man() succeeded.");
-			response_body = json::encode(
+			response_body = serde_json::to_string(
 				&SlackResponse{
 					response_type: "ephemeral".to_string(),
 					text: String::from_utf8_lossy(&man.stdout).into_owned(),
